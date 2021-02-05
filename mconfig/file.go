@@ -22,7 +22,7 @@ type file struct {
 }
 
 // NewFileProvider 从文件读取配置
-func NewFileProvider() (c Provier, err error) {
+func NewFileProvider() (c Provider, err error) {
 	v := viper.New()
 	v.SetConfigType("toml")
 	v.SetConfigFile(configFile)

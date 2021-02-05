@@ -39,7 +39,7 @@ func addAcmFlag(fs *flag.FlagSet) {
 }
 
 type acm struct {
-	options *provierOptions
+	options *providerOptions
 	iClient config_client.IConfigClient
 	v       *viper.Viper
 }
@@ -87,8 +87,8 @@ func buildConfig() (c *acmConfig, err error) {
 	}, nil
 }
 
-// NewAcmProvier .
-func NewAcmProvier(options *provierOptions) (c Provier, err error) {
+// NewAcmProvider .
+func NewAcmProvider(options *providerOptions) (c Provider, err error) {
 	if options.appID == "" {
 		err = errors.New("invalid app id")
 		return

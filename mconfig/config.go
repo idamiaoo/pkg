@@ -10,40 +10,40 @@ type sourceType int
 // OnChange 配置变化处理方法
 type OnChange func(v *viper.Viper) error
 
-// Provier .
-type Provier interface {
+// Provider .
+type Provider interface {
 	Watch(OnChange) error
 	Viper() *viper.Viper
 }
 
-var mgr Provier
+var mgr Provider
 
-// provierOptions .
-type provierOptions struct {
+// providerOptions .
+type providerOptions struct {
 	appID string
 }
 
-// ProvierOption .
-type ProvierOption interface {
-	apply(*provierOptions)
+// ProviderOption .
+type ProviderOption interface {
+	apply(*providerOptions)
 }
 
-type optionFunc func(*provierOptions)
+type optionFunc func(*providerOptions)
 
-func (fn optionFunc) apply(o *provierOptions) {
+func (fn optionFunc) apply(o *providerOptions) {
 	fn(o)
 }
 
 // WithAppID 设置 APP ID
-func WithAppID(appID string) ProvierOption {
-	return optionFunc(func(options *provierOptions) {
+func WithAppID(appID string) ProviderOption {
+	return optionFunc(func(options *providerOptions) {
 		options.appID = appID
 	})
 }
 
 // Init .
-func Init(opts ...ProvierOption) (err error) {
-	options := &provierOptions{}
+func Init(opts ...ProviderOption) (err error) {
+	options := &providerOptions{}
 
 	for _, opt := range opts {
 		opt.apply(options)
@@ -53,7 +53,7 @@ func Init(opts ...ProvierOption) (err error) {
 	if configFile != "" {
 		mgr, err = NewFileProvider()
 	} else { // 从阿里云 acm 读取配置
-		mgr, err = NewAcmProvier(options)
+		mgr, err = NewAcmProvider(options)
 	}
 	if err == nil {
 		viper.MergeConfigMap(mgr.Viper().AllSettings())

@@ -4,7 +4,6 @@ import (
 	"sync"
 
 	"github.com/pescaria/pkg/metadata"
-
 	"google.golang.org/grpc/balancer"
 	"google.golang.org/grpc/balancer/base"
 	"google.golang.org/grpc/resolver"
