@@ -52,7 +52,7 @@ func GinMiddleware() gin.HandlerFunc {
 		ext.HTTPMethod.Set(span, c.Request.Method)
 		ext.HTTPUrl.Set(span, c.Request.URL.String())
 		if sc, ok := span.Context().(jaeger.SpanContext); ok {
-			c.Writer.Header().Set("X-Request-Id", sc.TraceID().String())
+			c.Writer.Header().Set("X-Request-ID", sc.TraceID().String())
 			ctx = ContextWithTraceID(ctx, sc.TraceID().String())
 		}
 		c.Request = c.Request.Clone(ctx)

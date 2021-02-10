@@ -44,7 +44,7 @@ func init() {
 func addFlag(fs *flag.FlagSet) {
 	// env
 	fs.StringVar(&endpoints, "etcd.endpoints", os.Getenv("ETCD_ENDPOINTS"), "etcd.endpoints is etcd endpoints. value: 127.0.0.1:2379,127.0.0.2:2379 etc.")
-	fs.StringVar(&etcdPrefix, "etcd.prefix", defaultString("ETCD_PREFIX", "kratos_etcd"), "etcd globe key prefix or use ETCD_PREFIX env variable. value etcd_prefix etc.")
+	fs.StringVar(&etcdPrefix, "etcd.prefix", defaultString("ETCD_PREFIX", "services"), "etcd globe key prefix or use ETCD_PREFIX env variable. value etcd_prefix etc.")
 }
 
 func defaultString(env, value string) string {
