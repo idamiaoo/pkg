@@ -8,8 +8,8 @@ import (
 
 	"github.com/pescaria/pkg/timer"
 	log "github.com/sirupsen/logrus"
-	v3 "go.etcd.io/etcd/clientv3"
-	"go.etcd.io/etcd/mvcc/mvccpb"
+	"go.etcd.io/etcd/api/v3/mvccpb"
+	v3 "go.etcd.io/etcd/client/v3"
 )
 
 const (

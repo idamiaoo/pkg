@@ -12,7 +12,7 @@ import (
 	"github.com/segmentio/ksuid"
 	log "github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/require"
-	v3 "go.etcd.io/etcd/clientv3"
+	v3 "go.etcd.io/etcd/client/v3"
 )
 
 func TestTimer(t *testing.T) {

@@ -13,10 +13,9 @@ import (
 	"time"
 
 	"github.com/pescaria/pkg/naming"
-
 	log "github.com/sirupsen/logrus"
-	"go.etcd.io/etcd/clientv3"
-	"go.etcd.io/etcd/mvcc/mvccpb"
+	"go.etcd.io/etcd/api/v3/mvccpb"
+	v3 "go.etcd.io/etcd/client/v3"
 	"google.golang.org/grpc"
 )
 
@@ -56,7 +55,7 @@ func defaultString(env, value string) string {
 }
 
 // Builder return default etcd resolver builder.
-func Builder(c *clientv3.Config) naming.Builder {
+func Builder(c *v3.Config) naming.Builder {
 	_once.Do(func() {
 		_builder, _ = New(c)
 	})
@@ -64,13 +63,13 @@ func Builder(c *clientv3.Config) naming.Builder {
 }
 
 // Build register resolver into default etcd.
-func Build(c *clientv3.Config, id string) naming.Resolver {
+func Build(c *v3.Config, id string) naming.Resolver {
 	return Builder(c).Build(id)
 }
 
 // EtcdBuilder is a etcd clientv3 EtcdBuilder
 type EtcdBuilder struct {
-	cli        *clientv3.Client
+	cli        *v3.Client
 	ctx        context.Context
 	cancelFunc context.CancelFunc
 
@@ -93,18 +92,18 @@ type Resolve struct {
 }
 
 // New is new a etcdbuilder
-func New(c *clientv3.Config) (e *EtcdBuilder, err error) {
+func New(c *v3.Config) (e *EtcdBuilder, err error) {
 	if c == nil {
 		if endpoints == "" {
 			panic(fmt.Errorf("invalid etcd config endpoints:%+v", endpoints))
 		}
-		c = &clientv3.Config{
+		c = &v3.Config{
 			Endpoints:   strings.Split(endpoints, ","),
 			DialTimeout: time.Second * time.Duration(defaultDialTimeout),
 			DialOptions: []grpc.DialOption{grpc.WithBlock()},
 		}
 	}
-	cli, err := clientv3.New(*c)
+	cli, err := v3.New(*c)
 	if err != nil {
 		return nil, err
 	}
@@ -211,7 +210,7 @@ func (e *EtcdBuilder) register(ctx context.Context, ins *naming.Instance) (err e
 		log.Errorf("etcd: register client.Grant(%v) error(%v)", registerTTL, err)
 		return err
 	}
-	_, err = e.cli.Put(ctx, prefix, string(val), clientv3.WithLease(ttlResp.ID))
+	_, err = e.cli.Put(ctx, prefix, string(val), v3.WithLease(ttlResp.ID))
 	if err != nil {
 		log.Errorf("etcd: register client.Put(%v) appid(%s) hostname(%s) error(%v)",
 			prefix, ins.AppID, ins.Hostname, err)
@@ -241,27 +240,27 @@ func (e *EtcdBuilder) Close() error {
 	return nil
 }
 func (a *appInfo) watch(appID string) {
-	_ = a.fetchstore(appID)
+	_ = a.fetchStore(appID)
 	prefix := fmt.Sprintf("/%s/%s/", etcdPrefix, appID)
-	rch := a.e.cli.Watch(a.e.ctx, prefix, clientv3.WithPrefix())
+	rch := a.e.cli.Watch(a.e.ctx, prefix, v3.WithPrefix())
 	for wresp := range rch {
 		for _, ev := range wresp.Events {
 			if ev.Type == mvccpb.PUT || ev.Type == mvccpb.DELETE {
-				_ = a.fetchstore(appID)
+				_ = a.fetchStore(appID)
 			}
 		}
 	}
 }
 
-func (a *appInfo) fetchstore(appID string) (err error) {
+func (a *appInfo) fetchStore(appID string) (err error) {
 	prefix := fmt.Sprintf("/%s/%s/", etcdPrefix, appID)
-	resp, err := a.e.cli.Get(a.e.ctx, prefix, clientv3.WithPrefix())
+	resp, err := a.e.cli.Get(a.e.ctx, prefix, v3.WithPrefix())
 	if err != nil {
 		log.Errorf("etcd: fetch client.Get(%s) error(%+v)", prefix, err)
 		return err
 	}
 
-	ins, err := a.paserIns(resp)
+	ins, err := a.parserIns(resp)
 	if err != nil {
 		return err
 	}
@@ -281,7 +280,7 @@ func (a *appInfo) store(ins *naming.InstancesInfo) {
 	a.e.mutex.RUnlock()
 }
 
-func (a *appInfo) paserIns(resp *clientv3.GetResponse) (ins *naming.InstancesInfo, err error) {
+func (a *appInfo) parserIns(resp *v3.GetResponse) (ins *naming.InstancesInfo, err error) {
 	ins = &naming.InstancesInfo{
 		Instances: make([]*naming.Instance, 0),
 	}

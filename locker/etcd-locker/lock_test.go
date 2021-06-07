@@ -4,14 +4,15 @@ import (
 	"testing"
 	"time"
 
+	v3 "go.etcd.io/etcd/client/v3"
+
 	"github.com/stretchr/testify/assert"
-	"go.etcd.io/etcd/clientv3"
 )
 
 func TestEtcd3Locker(t *testing.T) {
 	a := assert.New(t)
 
-	client, err := clientv3.New(clientv3.Config{
+	client, err := v3.New(v3.Config{
 		Endpoints:   []string{"127.0.0.1:2379"},
 		DialTimeout: 5 * time.Second,
 	})

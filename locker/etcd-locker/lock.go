@@ -5,8 +5,8 @@ import (
 
 	"github.com/pescaria/pkg/locker"
 	"github.com/pkg/errors"
-	"go.etcd.io/etcd/clientv3"
-	"go.etcd.io/etcd/clientv3/concurrency"
+	v3 "go.etcd.io/etcd/client/v3"
+	"go.etcd.io/etcd/client/v3/concurrency"
 )
 
 // 基于etcdv3的分布式锁
@@ -16,7 +16,7 @@ type etcd3Lock struct {
 	session *concurrency.Session
 }
 
-func Acquire(client *clientv3.Client, id string) (locker.Locker, error) {
+func Acquire(client *v3.Client, id string) (locker.Locker, error) {
 	lock, err := New(client, id)
 	if err != nil {
 		return nil, err
@@ -27,7 +27,7 @@ func Acquire(client *clientv3.Client, id string) (locker.Locker, error) {
 	return lock, nil
 }
 
-func New(client *clientv3.Client, id string) (locker.Locker, error) {
+func New(client *v3.Client, id string) (locker.Locker, error) {
 	session, err := concurrency.NewSession(client)
 	if err != nil {
 		return nil, err
