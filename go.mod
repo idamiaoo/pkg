@@ -8,11 +8,12 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/gin-gonic/gin v1.6.3
+	github.com/go-playground/form/v4 v4.2.0
 	github.com/go-redis/redis/v7 v7.4.0
 	github.com/go-redis/redis/v8 v8.10.0
 	github.com/go-resty/resty/v2 v2.3.0
 	github.com/jinzhu/gorm v1.9.16
-	github.com/json-iterator/go v1.1.10 // indirect
+	github.com/json-iterator/go v1.1.10
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible // indirect
 	github.com/nacos-group/nacos-sdk-go v1.0.0
 	github.com/nsqio/go-nsq v1.0.8
