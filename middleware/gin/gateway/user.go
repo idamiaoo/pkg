@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/pescaria/pkg/util"
+	"github.com/katakurin/pkg/util"
 )
 
 type user struct {

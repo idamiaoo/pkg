@@ -1,4 +1,4 @@
-module github.com/pescaria/pkg
+module github.com/katakurin/pkg
 
 go 1.14
 

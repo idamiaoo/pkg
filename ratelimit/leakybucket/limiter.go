@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/pescaria/pkg/ratelimit"
+	"github.com/katakurin/pkg/ratelimit"
 )
 
 type leakyBucket struct {

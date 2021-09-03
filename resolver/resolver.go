@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/pescaria/pkg/metadata"
-	"github.com/pescaria/pkg/naming"
+	"github.com/katakurin/pkg/metadata"
+	"github.com/katakurin/pkg/naming"
 
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc/attributes"

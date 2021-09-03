@@ -14,7 +14,7 @@
 
 syntax = "proto3";
 
-option go_package = "github.com/pescaria/pkg/balancer/sessionkeep/examples/helloworld";
+option go_package = "github.com/katakurin/pkg/balancer/sessionkeep/examples/helloworld";
 
 package helloworld;
 
