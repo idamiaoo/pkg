@@ -2,7 +2,6 @@ package http
 
 import (
 	"fmt"
-	"io"
 	"net/http"
 	"testing"
 )
@@ -27,17 +26,4 @@ func TestParseTarget(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Logf("scheme=%s, authority=%s, endpoint=%s", u.Scheme, u.Authority, u.Endpoint)
-}
-
-func TestUxiao(t *testing.T) {
-	req, _ := http.NewRequest(http.MethodGet, "https://uxiao.ucloudadmin.com/uqa/apisource?api=GetCertificateList", nil)
-	req.AddCookie(&http.Cookie{
-		Name: "INNER_AUTH_TOKEN", Value: "61xtNteyilCaGkYFNBLBviF9rPGQYWbPN2zz4bq9jMqsKMcxq296M1mhutbjD3bNNOE9msxjLaziRwX4dY5UiGxoWew=",
-	})
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		t.Fatal(err)
-	}
-	body, _ := io.ReadAll(resp.Body)
-	t.Log(string(body))
 }
