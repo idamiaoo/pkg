@@ -16,7 +16,7 @@ const Name = "session_keep"
 
 // NewSessionKeepBuilder creates a new session_keep balancer builder.
 func NewSessionKeepBuilder(rds redis.Cmdable) balancer.Builder {
-	return base.NewBalancerBuilderV2(Name, &sessionKeepBuilder{rds: rds}, base.Config{HealthCheck: true})
+	return base.NewBalancerBuilder(Name, &sessionKeepBuilder{rds: rds}, base.Config{HealthCheck: true})
 }
 
 type subConn struct {
@@ -41,7 +41,7 @@ type sessionKeepBuilder struct {
 	keepFunc func(ctx context.Context)
 }
 
-func (*sessionKeepBuilder) Build(info base.PickerBuildInfo) balancer.V2Picker {
+func (*sessionKeepBuilder) Build(info base.PickerBuildInfo) balancer.Picker {
 	if len(info.ReadySCs) == 0 {
 		return base.NewErrPickerV2(balancer.ErrNoSubConnAvailable)
 	}

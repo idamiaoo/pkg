@@ -14,7 +14,7 @@ const Name = "weighted_round_robin"
 
 // newBuilder creates a new roundrobin balancer builder.
 func newBuilder() balancer.Builder {
-	return base.NewBalancerBuilderV2(Name, &wrrPickerBuilder{}, base.Config{HealthCheck: true})
+	return base.NewBalancerBuilder(Name, &wrrPickerBuilder{}, base.Config{HealthCheck: true})
 }
 
 func init() {
@@ -36,7 +36,7 @@ type subConn struct {
 
 type wrrPickerBuilder struct{}
 
-func (*wrrPickerBuilder) Build(info base.PickerBuildInfo) balancer.V2Picker {
+func (*wrrPickerBuilder) Build(info base.PickerBuildInfo) balancer.Picker {
 	if len(info.ReadySCs) == 0 {
 		return base.NewErrPickerV2(balancer.ErrNoSubConnAvailable)
 	}
