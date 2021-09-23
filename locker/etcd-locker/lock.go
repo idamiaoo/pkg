@@ -3,7 +3,7 @@ package etcdlocker
 import (
 	"context"
 
-	"github.com/katakurin/pkg/locker"
+	"github.com/lunarhalos/pkg/locker"
 	"github.com/pkg/errors"
 	v3 "go.etcd.io/etcd/client/v3"
 	"go.etcd.io/etcd/client/v3/concurrency"

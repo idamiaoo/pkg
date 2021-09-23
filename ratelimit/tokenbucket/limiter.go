@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/katakurin/pkg/ratelimit"
+	"github.com/lunarhalos/pkg/ratelimit"
 )
 
 // tokenBucket 令牌桶限流器

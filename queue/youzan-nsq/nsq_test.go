@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/katakurin/pkg/queue"
+	"github.com/lunarhalos/pkg/queue"
 
 	"github.com/segmentio/ksuid"
 	"github.com/stretchr/testify/require"

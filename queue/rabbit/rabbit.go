@@ -5,7 +5,7 @@ import (
 	"log"
 	"sync/atomic"
 
-	"github.com/katakurin/pkg/queue"
+	"github.com/lunarhalos/pkg/queue"
 
 	"github.com/pkg/errors"
 	"github.com/streadway/amqp"

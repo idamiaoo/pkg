@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/katakurin/pkg/ratelimit"
+	"github.com/lunarhalos/pkg/ratelimit"
 )
 
 type counter struct {

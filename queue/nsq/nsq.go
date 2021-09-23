@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/katakurin/pkg/queue"
+	"github.com/lunarhalos/pkg/queue"
 
 	"github.com/nsqio/go-nsq"
 	"github.com/sirupsen/logrus"

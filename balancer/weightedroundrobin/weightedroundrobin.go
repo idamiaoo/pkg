@@ -3,7 +3,7 @@ package weightedroundrobin
 import (
 	"sync"
 
-	"github.com/katakurin/pkg/metadata"
+	"github.com/lunarhalos/pkg/metadata"
 	"google.golang.org/grpc/balancer"
 	"google.golang.org/grpc/balancer/base"
 	"google.golang.org/grpc/resolver"

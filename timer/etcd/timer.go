@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/katakurin/pkg/timer"
+	"github.com/lunarhalos/pkg/timer"
 	log "github.com/sirupsen/logrus"
 	"go.etcd.io/etcd/api/v3/mvccpb"
 	v3 "go.etcd.io/etcd/client/v3"

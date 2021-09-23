@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/katakurin/pkg/queue"
+	"github.com/lunarhalos/pkg/queue"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spaolacci/murmur3"

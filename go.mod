@@ -1,4 +1,4 @@
-module github.com/katakurin/pkg
+module github.com/lunarhalos/pkg
 
 go 1.14
 

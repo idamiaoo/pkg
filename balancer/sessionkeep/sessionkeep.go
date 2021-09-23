@@ -5,7 +5,7 @@ import (
 	"sync"
 
 	"github.com/go-redis/redis/v8"
-	"github.com/katakurin/pkg/metadata"
+	"github.com/lunarhalos/pkg/metadata"
 	"google.golang.org/grpc/balancer"
 	"google.golang.org/grpc/balancer/base"
 	"google.golang.org/grpc/resolver"

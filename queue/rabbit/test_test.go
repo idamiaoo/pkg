@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/katakurin/pkg/queue"
+	"github.com/lunarhalos/pkg/queue"
 
 	"github.com/stretchr/testify/require"
 )

@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/katakurin/pkg/timer"
+	"github.com/lunarhalos/pkg/timer"
 
 	"github.com/segmentio/ksuid"
 	log "github.com/sirupsen/logrus"
