@@ -87,15 +87,15 @@ func NewClient(endpoint string, options ...ClientOption) (*Client, error) {
 
 func (client *Client) Invoke(ctx context.Context, method, path string, args interface{}, reply interface{}, opts ...CallOption) error {
 	request := &Request{
-		URL:         fmt.Sprintf("%s://%s%s", client.target.Scheme, client.target.Authority, path),
+		ctx:         ctx,
+		client:      client,
+		url:         fmt.Sprintf("%s://%s%s", client.target.Scheme, client.target.Authority, path),
 		Method:      strings.ToUpper(method),
 		QueryParam:  make(url.Values),
 		FormData:    make(url.Values),
 		Header:      make(http.Header),
 		ContentType: client.opt.contentType,
 		Time:        time.Now(),
-		ctx:         ctx,
-		client:      client,
 	}
 
 	if args != nil {
@@ -155,14 +155,10 @@ func (client *Client) Invoke(ctx context.Context, method, path string, args inte
 }
 
 func (client *Client) Do(request *Request) (*Response, error) {
-	if err := request.ParseURL(); err != nil {
-		return nil, err
-	}
-
 	if err := request.parseBody(); err != nil {
 		return nil, err
 	}
-	req, err := http.NewRequestWithContext(request.Context(), request.Method, request.URL, request.bodyReader)
+	req, err := http.NewRequestWithContext(request.Context(), request.Method, request.URL(), request.bodyReader)
 	if err != nil {
 		return nil, err
 	}

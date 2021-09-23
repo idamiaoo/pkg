@@ -3,7 +3,6 @@ package http
 import (
 	"bytes"
 	"context"
-	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -13,13 +12,13 @@ import (
 
 type Request struct {
 	ContentType ContentType
-	URL         string
 	Method      string
 	QueryParam  url.Values
 	FormData    url.Values
 	Body        []byte
 	Header      http.Header
 	Time        time.Time
+	url         string
 	bodyReader  io.Reader
 	ctx         context.Context
 	client      *Client
@@ -102,10 +101,10 @@ func (r *Request) SetBody(body []byte) *Request {
 	return r
 }
 
-func (r *Request) ParseURL() error {
-	reqURL, err := url.Parse(r.URL)
+func (r *Request) URL() string {
+	reqURL, err := url.Parse(r.url)
 	if err != nil {
-		return err
+		return r.url
 	}
 	if len(r.QueryParam) > 0 {
 		if len(strings.TrimSpace(reqURL.RawQuery)) == 0 {
@@ -114,9 +113,7 @@ func (r *Request) ParseURL() error {
 			reqURL.RawQuery = reqURL.RawQuery + "&" + r.QueryParam.Encode()
 		}
 	}
-	r.URL = reqURL.String()
-	fmt.Println(r.URL)
-	return nil
+	return reqURL.String()
 }
 
 func (r *Request) parseBody() (err error) {
